@@ -5,6 +5,7 @@
 package fcoverage;
 
 import java.util.Random;
+import jbotsim.Node;
 import jbotsim.ui.JTopology;
 import jbotsim.ui.JViewer;
 
@@ -29,6 +30,7 @@ public class FCoverage {
             Integer size = r.nextInt(maxObstacleSize-minObstacleSize)+minObstacleSize;
             System.out.println(size);
         }
+        Node.setModel("default", new RobotNode());
         topology = new JTopology();
         viewer = new JViewer(topology);
     }
