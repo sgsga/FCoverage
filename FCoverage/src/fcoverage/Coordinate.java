@@ -8,18 +8,20 @@ package fcoverage;
  *
  * @author Richárd
  */
-public class Coordinate {
+public final class Coordinate {
     private int h;
     private int x;
     private int y;
     public final float A = 20;
     public final float EX = A/2;
     public final float EY = (float) (Math.sqrt(3)*EX);
+    public final float DX = 0;
+    public final float DY = 0;
 
-    public Coordinate(int h, int x, int y) {
-        this.h = h;
+    public Coordinate(int x, int y) {
         this.x = x;
         this.y = y;
+        this.h = (int) Math.ceil(distanceFromPOI()/A);    
     }
 
     public int getH() {
@@ -77,18 +79,18 @@ public class Coordinate {
     }
     
     public float getRealX() {
-        return x*EX;
+        return x*EX + DX;
     }
     
     public float getRealY() {
-        return y*EY;
+        return y*EY + DY;
     }
     
     public double distanceFrom(Coordinate coordinate) {
-        return Math.sqrt(Math.pow(coordinate.x-x, 2) + Math.pow(coordinate.y-y, 2));
+        return Math.sqrt(Math.pow(coordinate.getRealX()-this.getRealX(), 2) + Math.pow(coordinate.getRealY()-this.getRealY(), 2));
     }
     
     public double distanceFromPOI() {
-        return distanceFrom(new Coordinate(0, 0, 0));
+        return distanceFrom(new Coordinate(0, 0));
     }
 }
