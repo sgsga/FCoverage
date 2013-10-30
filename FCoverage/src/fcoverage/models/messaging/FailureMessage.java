@@ -14,9 +14,12 @@ public class FailureMessage {
     private Coordinate position;
     private Coordinate senderPosition;
 
-    public FailureMessage(Coordinate position) {
+    public FailureMessage(Coordinate position, Coordinate senderPosition) {
         this.position = position;
+        this.senderPosition = senderPosition;
     }
+
+    
 
     public Coordinate getPosition() {
         return position;

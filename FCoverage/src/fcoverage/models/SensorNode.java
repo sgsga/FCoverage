@@ -4,6 +4,7 @@
  */
 package fcoverage.models;
 
+import fcoverage.models.messaging.HelloMessage;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -25,6 +26,8 @@ public class SensorNode extends Node implements ClockListener, MessageListener{
     private HashSet<Coordinate> evl = new HashSet<Coordinate>();    // empty or death nodes
     private ConcurrentHashMap<Coordinate, Integer> neighbours = new ConcurrentHashMap<Coordinate, Integer>();
     private final int MAX_TICK = 5;
+    
+    private HelloMessage myHelloMesssage = new HelloMessage(myPosition);
 
     public SensorNode() {
         /*Random r = new Random(System.currentTimeMillis());
@@ -58,9 +61,10 @@ public class SensorNode extends Node implements ClockListener, MessageListener{
 
     @Override
     public void onClock() {
+        send(null, myHelloMesssage);
         for (Entry<Coordinate, Integer> c : neighbours.entrySet()) {
             // if node received message
-            if (c.getValue() == 0) {
+            if (c.getValue().equals(0)) {
                 evl.remove(c.getKey());
             } else if (c.getValue() > MAX_TICK) {
                 evl.add(c.getKey());
@@ -72,7 +76,11 @@ public class SensorNode extends Node implements ClockListener, MessageListener{
 
     @Override
     public void onMessage(Message msg) {
-        System.out.println(msg.content);
+        Object message = msg.content;
+        if (message instanceof HelloMessage) {
+            HelloMessage hm = (HelloMessage) message;
+            neighbours.put(hm.getPosition(), 0);
+        }
     }
     
     public void reactiveAdvertisingRoutine() {
