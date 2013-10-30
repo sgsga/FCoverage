@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package fcoverage;
+package fcoverage.models;
 
 import java.util.HashSet;
 import java.util.Iterator;
