@@ -15,8 +15,8 @@ public final class Coordinate {
     public final float A = 20;
     public final float EX = A/2;
     public final float EY = (float) (Math.sqrt(3)*EX);
-    public final float DX = 0;
-    public final float DY = 0;
+    public final float DX = 512;
+    public final float DY = 384;
 
     public Coordinate(int x, int y) {
         this.x = x;
@@ -86,11 +86,18 @@ public final class Coordinate {
         return y*EY + DY;
     }
     
-    public double distanceFrom(Coordinate coordinate) {
-        return Math.sqrt(Math.pow(coordinate.getRealX()-this.getRealX(), 2) + Math.pow(coordinate.getRealY()-this.getRealY(), 2));
+    public double distanceFrom(int x, int y) {
+        return Math.sqrt(Math.pow(x*EX + DX-this.getRealX(), 2) + Math.pow(y*EY + DY-this.getRealY(), 2));
     }
     
     public double distanceFromPOI() {
-        return distanceFrom(new Coordinate(0, 0));
+        return distanceFrom(0, 0);
     }
+
+    @Override
+    public String toString() {
+        return "<" + h + "," + x + "," + y + '>';
+    }
+    
+    
 }

@@ -4,11 +4,18 @@
  */
 package fcoverage;
 
+import fcoverage.models.Coordinate;
 import fcoverage.models.RobotNode;
+import fcoverage.models.SensorNode;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 import jbotsim.Node;
+import jbotsim.Topology;
 import jbotsim.ui.JTopology;
 import jbotsim.ui.JViewer;
 
@@ -17,8 +24,11 @@ import jbotsim.ui.JViewer;
  * @author nagysan
  */
 public class FCoverage {
-    static JTopology topology;
-    static JViewer viewer;
+    public static JTopology topology;
+    public static Topology topologyModel;
+    public static JViewer viewer;
+    
+    public static Map<Coordinate,Integer> alreadyAdded = Collections.synchronizedMap(new ConcurrentHashMap<Coordinate, Integer>());
     
     static void printPoints(double  u, double  v, double  x, double  y, double  r){
         double  vx = y-v;
@@ -57,8 +67,14 @@ public class FCoverage {
             Integer size = r.nextInt(maxObstacleSize-minObstacleSize)+minObstacleSize;
             System.out.println(size);
         }
-        Node.setModel("default", new RobotNode());
-        topology = new JTopology();
+        Node.setModel("default", new Node());
+        topologyModel = new Topology(1024, 768);
+        topology = new JTopology(topologyModel);
+        alreadyAdded.put(new Coordinate(0, 0),0);
+        topologyModel.addNode(new SensorNode(new Coordinate(0, 0)));
+        
+        topology.repaint();
         viewer = new JViewer(topology);
+        viewer.setSize(1024, 768);
     }
 }

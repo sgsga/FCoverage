@@ -4,6 +4,7 @@
  */
 package fcoverage.models;
 
+import static fcoverage.FCoverage.alreadyAdded;
 import fcoverage.models.messaging.HelloMessage;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -27,23 +28,21 @@ public class SensorNode extends Node implements ClockListener, MessageListener{
     private ConcurrentHashMap<Coordinate, Integer> neighbours = new ConcurrentHashMap<Coordinate, Integer>();
     private final int MAX_TICK = 5;
     
-    private HelloMessage myHelloMesssage = new HelloMessage(myPosition);
+    private HelloMessage myHelloMessage;
 
     public SensorNode() {
-        /*Random r = new Random(System.currentTimeMillis());
-        int x = r.nextInt(800);
-        int y = r.nextInt(600);
-        this.setLocation(x, y);
-        this.setDirection(-Math.PI/2);*/   
     }
 
     public SensorNode(Coordinate myPosition) {
         this.myPosition = myPosition;
+        myHelloMessage = new HelloMessage(myPosition);
         Clock.addClockListener(this, 1);
+        this.setLocation(myPosition.getRealX(), myPosition.getRealY());
         setSensingRange(0);
         enableWireless();
-        setCommunicationRange(40);
+        setCommunicationRange(21);
         addMessageListener(this);
+        this.setState(myPosition);
         double distanceFromPOI = myPosition.distanceFromPOI();
         
         evl.add(new Coordinate(myPosition.getX()-2, myPosition.getY()));
@@ -55,13 +54,15 @@ public class SensorNode extends Node implements ClockListener, MessageListener{
         Iterator<Coordinate> it;
         
         for (it = evl.iterator(); it.hasNext(); ) {
-            neighbours.put(it.next(), 0);
+            Coordinate c = it.next();
+            neighbours.put(c, 1);
         }
     }
 
     @Override
     public void onClock() {
-        send(null, myHelloMesssage);
+        //System.out.println("Clock");
+        send(null, myHelloMessage);
         for (Entry<Coordinate, Integer> c : neighbours.entrySet()) {
             // if node received message
             if (c.getValue().equals(0)) {
