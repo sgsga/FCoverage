@@ -9,7 +9,6 @@ package fcoverage.models;
  * @author Richárd
  */
 public final class Coordinate {
-    private int h;
     private int x;
     private int y;
     public final float A = 20;
@@ -20,17 +19,9 @@ public final class Coordinate {
 
     public Coordinate(int x, int y) {
         this.x = x;
-        this.y = y;
-        this.h = (int) Math.ceil(distanceFromPOI()/A);    
+        this.y = y;   
     }
 
-    public int getH() {
-        return h;
-    }
-
-    public void setH(int h) {
-        this.h = h;
-    }
 
     public int getX() {
         return x;
@@ -57,9 +48,6 @@ public final class Coordinate {
             return false;
         }
         final Coordinate other = (Coordinate) obj;
-        if (this.h != other.h) {
-            return false;
-        }
         if (this.x != other.x) {
             return false;
         }
@@ -72,7 +60,6 @@ public final class Coordinate {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 13 * hash + this.h;
         hash = 13 * hash + this.x;
         hash = 13 * hash + this.y;
         return hash;
@@ -96,7 +83,7 @@ public final class Coordinate {
 
     @Override
     public String toString() {
-        return "<" + h + "," + x + "," + y + '>';
+        return "<" + x + "," + y + '>';
     }
     
     

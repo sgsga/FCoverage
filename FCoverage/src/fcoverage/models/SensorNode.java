@@ -43,7 +43,6 @@ public class SensorNode extends Node implements ClockListener, MessageListener{
         setCommunicationRange(21);
         addMessageListener(this);
         this.setState(myPosition);
-        double distanceFromPOI = myPosition.distanceFromPOI();
         
         evl.add(new Coordinate(myPosition.getX()-2, myPosition.getY()));
         evl.add(new Coordinate(myPosition.getX()+2, myPosition.getY()));
