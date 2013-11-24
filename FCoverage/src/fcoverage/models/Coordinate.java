@@ -4,6 +4,8 @@
  */
 package fcoverage.models;
 
+import java.awt.geom.Point2D;
+
 /**
  *
  * @author Richárd
@@ -71,6 +73,10 @@ public final class Coordinate {
     
     public float getRealY() {
         return y*EY + DY;
+    }
+    
+    public Point2D.Double getRealLocation(){
+        return new Point2D.Double(getRealX(), getRealY());
     }
     
     public double distanceFrom(int x, int y) {

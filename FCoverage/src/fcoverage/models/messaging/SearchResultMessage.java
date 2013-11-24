@@ -11,13 +11,11 @@ import fcoverage.models.Coordinate;
  *
  * @author nagysan
  */
-public class HelloMessage{
+public class SearchResultMessage{
     private Coordinate position;
-    private Integer sensorId;
 
-    public HelloMessage(Coordinate position, Integer sensorId) {
+    public SearchResultMessage(Coordinate position) {
         this.position = position;
-        this.sensorId = sensorId;
     }
 
     public Coordinate getPosition() {
@@ -26,10 +24,6 @@ public class HelloMessage{
 
     public void setPosition(Coordinate position) {
         this.position = position;
-    }
-
-    public Integer getSensorId() {
-        return sensorId;
     }
     
     

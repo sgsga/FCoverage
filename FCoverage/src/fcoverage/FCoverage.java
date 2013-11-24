@@ -7,6 +7,7 @@ package fcoverage;
 import fcoverage.models.Coordinate;
 import fcoverage.models.RobotNode;
 import fcoverage.models.SensorNode;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -67,11 +68,11 @@ public class FCoverage {
             Integer size = r.nextInt(maxObstacleSize-minObstacleSize)+minObstacleSize;
             System.out.println(size);
         }
-        Node.setModel("default", new Node());
+        Node.setModel("default", new RobotNode());
         topologyModel = new Topology(1024, 768);
         topology = new JTopology(topologyModel);
         alreadyAdded.put(new Coordinate(0, 0),0);
-        topologyModel.addNode(new SensorNode(new Coordinate(0, 0)));
+        //topologyModel.addNode(new SensorNode(new Coordinate(0, 0)));
         
         topology.repaint();
         viewer = new JViewer(topology);
