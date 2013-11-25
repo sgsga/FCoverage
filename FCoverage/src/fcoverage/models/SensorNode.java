@@ -42,7 +42,12 @@ public class SensorNode extends Node implements ClockListener, MessageListener {
         return idSeq++;
     }
     private HelloMessage myHelloMessage;
+    private boolean working = false;
 
+    
+    public static void reset(){
+        idSeq = 0;
+    }
     public SensorNode() {
     }
 
@@ -73,6 +78,7 @@ public class SensorNode extends Node implements ClockListener, MessageListener {
 
     @Override
     public void onClock() {
+        if (working){
         //System.out.println("Clock");
         send(null, myHelloMessage);
         for (Entry<Coordinate, Integer> c : neighbours.entrySet()) {
@@ -85,10 +91,12 @@ public class SensorNode extends Node implements ClockListener, MessageListener {
             }
             neighbours.put(c.getKey(), c.getValue() + 1);
         }
+        }
     }
 
     @Override
     public void onMessage(Message msg) {
+        if (working){
         Object message = msg.content;
         if (message instanceof SearchMessage) 
         {
@@ -127,12 +135,13 @@ public class SensorNode extends Node implements ClockListener, MessageListener {
             HelloMessage hm = (HelloMessage) message;
             neighbours.put(hm.getPosition(), 0);
         }
-    }
-
-    public void reactiveAdvertisingRoutine() {
+        }
     }
 
     private boolean isBorderNode() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return true;//throw new UnsupportedOperationException("Not supported yet.");
     }
+    
+    public void arm() {working = true;}
+    public void unArm() {working = false;}
 }

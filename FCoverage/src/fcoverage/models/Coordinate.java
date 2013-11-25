@@ -11,6 +11,7 @@ import java.awt.geom.Point2D;
  * @author Richárd
  */
 public final class Coordinate {
+    private int h;
     private int x;
     private int y;
     public final float A = 20;
@@ -21,7 +22,8 @@ public final class Coordinate {
 
     public Coordinate(int x, int y) {
         this.x = x;
-        this.y = y;   
+        this.y = y;  
+        h = (int) Math.floor((distanceFromPOI()+2)/A);
     }
 
 
@@ -67,11 +69,11 @@ public final class Coordinate {
         return hash;
     }
     
-    public float getRealX() {
+    public double getRealX() {
         return x*EX + DX;
     }
     
-    public float getRealY() {
+    public double getRealY() {
         return y*EY + DY;
     }
     

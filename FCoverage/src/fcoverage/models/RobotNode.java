@@ -34,7 +34,7 @@ public class RobotNode extends Node implements ClockListener, MessageListener {
     Integer sensorAtBP = 100;
     final Integer CAPACITY = 50;
     Integer sensorLoaded = 0;
-    double speed = 1;
+    double speed = 10;
     private static Integer idSeq = 0;
     private static final ArrayBlockingQueue<Coordinate> baseCoordinates = new ArrayBlockingQueue<Coordinate>(6);
 
@@ -48,6 +48,15 @@ public class RobotNode extends Node implements ClockListener, MessageListener {
     boolean working = true;
     boolean marching = true;
 
+    public static void reset(){
+        baseCoordinates.clear();
+        baseCoordinates.add(new Coordinate(0, 0));
+        baseCoordinates.add(new Coordinate(40, -20));
+        baseCoordinates.add(new Coordinate(-40, 20));
+        baseCoordinates.add(new Coordinate(-40, -20));
+        baseCoordinates.add(new Coordinate(40, 20));
+        idSeq = 0;
+    }
     public static synchronized Integer getNextId() {
         return idSeq++;
     }
@@ -80,8 +89,8 @@ public class RobotNode extends Node implements ClockListener, MessageListener {
         if (working) {
             if (marching) {
                 this.setDirection(marchingPoint.getRealLocation());
-                this.move(1 * speed);
-                if (getLocation().distance(marchingPoint.getRealLocation()) < 1) {
+                this.move(1*speed);
+                if (getLocation().distance(marchingPoint.getRealLocation()) < speed) {
                     setLocation(marchingPoint.getRealLocation());
                     setMarchingPoint(null);
                 }
@@ -133,4 +142,7 @@ public class RobotNode extends Node implements ClockListener, MessageListener {
             }
         }
     }
+    
+    public void arm() {working = true;}
+    public void unArm() {working = false;}
 }

@@ -7,6 +7,7 @@ package fcoverage;
 import fcoverage.models.Coordinate;
 import fcoverage.models.RobotNode;
 import fcoverage.models.SensorNode;
+import fcoverage.ui.CustomJTopology;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,7 +26,7 @@ import jbotsim.ui.JViewer;
  * @author nagysan
  */
 public class FCoverage {
-    public static JTopology topology;
+    public static CustomJTopology topology;
     public static Topology topologyModel;
     public static JViewer viewer;
     
@@ -70,9 +71,8 @@ public class FCoverage {
         }
         Node.setModel("default", new RobotNode());
         topologyModel = new Topology(1024, 768);
-        topology = new JTopology(topologyModel);
+        topology = new CustomJTopology(topologyModel);
         alreadyAdded.put(new Coordinate(0, 0),0);
-        //topologyModel.addNode(new SensorNode(new Coordinate(0, 0)));
         
         topology.repaint();
         viewer = new JViewer(topology);
